@@ -42,7 +42,19 @@ $tasks = [
     ],
 ];
 
+//Вычиление количества задач в каждой категории.
+$taskCount = function (array $array, $name) {
+    $count = 0;
+    foreach ($array as $item) {
+        if ($item['category'] === $name) {
+            $count += 1;
+        }
+    }
+    return $count;
+}
+
 ?>
+
 <!DOCTYPE html>
 <html lang="ru">
 
@@ -86,7 +98,9 @@ $tasks = [
                         <?php foreach ($categories as $value): ?>
                             <li class="main-navigation__list-item">
                                 <a class="main-navigation__list-item-link" href="#"><?php echo($value); ?></a>
-                                <span class="main-navigation__list-item-count">0</span>
+                                <span class="main-navigation__list-item-count">
+                                    <?php echo($taskCount($tasks, $value)); ?>
+                                </span>
                             </li>
                         <?php endforeach;?>
                     </ul>
