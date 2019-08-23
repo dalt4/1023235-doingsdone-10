@@ -71,4 +71,3 @@ print include_template('layout.php', [
     'userName' => $userName,
     'pageTitle' => $pageTitle
 ]);
-
