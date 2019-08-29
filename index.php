@@ -1,71 +1,53 @@
 <?php
 
 require_once('helpers.php');
+require_once ('init.php');
+require_once ('functions.php');
 
 $pageTitle = 'Дела в порядке';
 $userName = 'Василий';
+$user_id = 1;
 
-// показывать или нет выполненные задачи
-$show_complete_tasks = rand(0, 1);
 
-$categories = ['Входящие', 'Учеба', 'Работа', 'Домашние дела', 'Авто'];
-$tasks = [
-    [
-        'name' => 'Собеседование в IT компании',
-        'doneDate' => '01.12.2019',
-        'category' => $categories[2],
-        'done' => false
-    ],
-    [
-        'name' => 'Выполнить тестовое задание',
-        'doneDate' => '25.12.2019',
-        'category' => $categories[2],
-        'done' => false
-    ],
-    [
-        'name' => 'Сделать задание первого раздела',
-        'doneDate' => '21.12.2019',
-        'category' => $categories[1],
-        'done' => true
-    ],
-    [
-        'name' => 'Встреча с другом',
-        'doneDate' => '22.12.2019',
-        'category' => $categories[0],
-        'done' => false
-    ],
-    [
-        'name' => 'Купить корм для кота',
-        'doneDate' => null,
-        'category' => $categories[3],
-        'done' => false
-    ],
-    [
-        'name' => 'Заказать пиццу',
-        'doneDate' => null,
-        'category' => $categories[3],
-        'done' => false
-    ],
-];
+if (!$link) {
+    $error = mysqli_connect_error();
+    $pageContent = include_template('error.php', ['error' => $error]);
+}
+else {
+    $sql = "SELECT id, name FROM categories WHERE user_id = $user_id";
+    $result = mysqli_query($link, $sql);
 
-//Вычиление количества задач в каждой категории.
-$taskCounter = function (array $array, $value) {
-    $count = 0;
-    foreach ($array as $item) {
-        if ($item['category'] === $value) {
-            $count += 1;
-        }
+    if ($result) {
+        $categories = mysqli_fetch_all($result, MYSQLI_ASSOC);
     }
-    return $count;
+    else {
+        $error = "Ошибка запроса: " . mysqli_error($link);
+        $pageContent = include_template('error.php', ['error' => $error]);
+    }
+
+
+    $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
+            JOIN categories c ON c.id = t.categories_id
+            WHERE t.user_id = $user_id";
+
+
+    if ($res = mysqli_query($link, $sql)) {
+        $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
+    }
+    else {
+        $error = "Ошибка запроса: " . mysqli_error($link);
+        $pageContent = include_template('error.php', ['error' => $error]);
+    };
+
+    if ($result && $res) {
+        $pageContent = include_template('main.php', [
+            'categories' => $categories,
+            'tasks' => $tasks,
+            'show_complete_tasks' => $show_complete_tasks,
+            'taskCounter' => $taskCounter
+        ]);
+    }
 };
-
-$pageContent = include_template('main.php', [
-    'categories' => $categories,
-    'tasks' => $tasks,
-    'show_complete_tasks' => $show_complete_tasks,
-    'taskCounter' => $taskCounter
-]);
-
 print include_template('layout.php', [
     'pageContent' => $pageContent,
     'userName' => $userName,

@@ -5,9 +5,9 @@
         <ul class="main-navigation__list">
             <?php foreach ($categories as $value): ?>
                 <li class="main-navigation__list-item">
-                    <a class="main-navigation__list-item-link" href="#"><?= strip_tags($value) ?></a>
+                    <a class="main-navigation__list-item-link" href="#"><?= strip_tags($value['name']) ?></a>
                     <span class="main-navigation__list-item-count">
-                        <?= $taskCounter($tasks, $value) ?>
+                        <?= $taskCounter($tasks, $value['name']) ?>
                     </span>
                 </li>
             <?php endforeach; ?>
@@ -49,7 +49,7 @@
             <?php if ($value['done'] && !$show_complete_tasks) {continue;} ?>
             <tr class="tasks__item task
                 <?= $value['done'] ? 'task--completed ':' ' ?>
-                <?= (strtotime($value['doneDate']) - time())/3600 <= 24 && $value['doneDate'] ? 'task--important':'' ?>
+                <?= (strtotime($value['doneDate']) - time())/3600 <= 24 && $value['doneDate'] && !$value['done']? 'task--important':'' ?>
             ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
@@ -57,7 +57,7 @@
                         <span class="checkbox__text"><?= strip_tags($value['name'])?></span>
                     </label>
                 </td>
-                <td class="task__date"><?= strip_tags($value['doneDate'])?></td>
+                <td class="task__date"><?= $value['doneDate'] ? date('d.m.Y', strtotime($value['doneDate'])): '' ?></td>
                 <td class="task__controls"></td>
             </tr>
         <?php endforeach ?>
