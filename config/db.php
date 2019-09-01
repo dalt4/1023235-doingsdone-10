@@ -1,6 +1,6 @@
 <?php
 $db = [
-    'host' =>  'doingsdone',
+    'host' =>  'localhost',
     'login' => 'root',
     'password' =>'',
     'dataBase' =>'doingsdone'
