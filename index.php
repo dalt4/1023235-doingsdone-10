@@ -6,7 +6,7 @@ require_once ('functions.php');
 
 $pageTitle = 'Дела в порядке';
 $userName = 'Василий';
-$user_id = 1;
+$userId = 1;
 
 
 if (!$link) {
@@ -14,7 +14,9 @@ if (!$link) {
     $pageContent = include_template('error.php', ['error' => $error]);
 }
 else {
-    $sql = "SELECT id, name FROM categories WHERE user_id = $user_id";
+    $sql = "SELECT c.id, c.name, COUNT(t.id) AS tasksCount FROM categories c
+            LEFT  JOIN tasks t ON c.id = t.categories_id 
+            WHERE c.user_id = $userId GROUP BY c.id";
     $result = mysqli_query($link, $sql);
 
     if ($result) {
@@ -24,12 +26,18 @@ else {
         $error = "Ошибка запроса: " . mysqli_error($link);
         $pageContent = include_template('error.php', ['error' => $error]);
     }
+    if (!isset($_GET['id'])) {
 
-
-    $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
+        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
             JOIN categories c ON c.id = t.categories_id
-            WHERE t.user_id = $user_id";
-
+            WHERE t.user_id = $userId";
+    }
+    else {
+        $id = $_GET['id'];
+        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
+            JOIN categories c ON c.id = t.categories_id
+            WHERE t.user_id = $userId AND c.id = $id";
+    }
 
     if ($res = mysqli_query($link, $sql)) {
         $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
@@ -39,14 +47,19 @@ else {
         $pageContent = include_template('error.php', ['error' => $error]);
     };
 
-    if ($result && $res) {
+    if (count($tasks) === 0) {
+        http_response_code(404);
+        exit;
+    }
+
+    elseif ($result && $res) {
         $pageContent = include_template('main.php', [
             'categories' => $categories,
             'tasks' => $tasks,
             'show_complete_tasks' => $show_complete_tasks,
-            'taskCounter' => $taskCounter
         ]);
     }
+
 };
 print include_template('layout.php', [
     'pageContent' => $pageContent,
