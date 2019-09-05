@@ -1,13 +1,8 @@
 <?php
 
-require_once('helpers.php');
-require_once ('init.php');
-require_once ('functions.php');
+require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке';
-$userName = 'Василий';
-$userId = 1;
-
 
 if (!$link) {
     $error = mysqli_connect_error();
@@ -28,13 +23,13 @@ else {
     }
     if (!isset($_GET['id'])) {
 
-        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
+        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
             JOIN categories c ON c.id = t.categories_id
             WHERE t.user_id = $userId";
     }
     else {
         $id = $_GET['id'];
-        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category FROM tasks t
+        $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
             JOIN categories c ON c.id = t.categories_id
             WHERE t.user_id = $userId AND c.id = $id";
     }
