@@ -57,6 +57,9 @@
                         <span class="checkbox__text"><?= strip_tags($value['name'])?></span>
                     </label>
                 </td>
+                <td class="task__file">
+                    <?= $value['userFile'] ? '<a href="' . $value['userFile'] . '">прикрепленный файл</a>' : ''?>
+                </td>
                 <td class="task__date"><?= $value['doneDate'] ? date('d.m.Y', strtotime($value['doneDate'])): '' ?></td>
                 <td class="task__controls"></td>
             </tr>
