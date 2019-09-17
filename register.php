@@ -22,8 +22,6 @@ else {
 
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
-        $errors =[];
-
         if (empty($_POST['email'])) {
             $errors['email'] = "Это поле нужно заполнить";
         } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
