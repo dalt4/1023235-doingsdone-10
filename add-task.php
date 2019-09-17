@@ -71,8 +71,8 @@ else {
                 'fileUrl' => $fileUrl === '/uploads/' ? null: $fileUrl
             ];
 
-            $sql = 'INSERT INTO tasks (status, name, user_file, done_date, user_id, categories_id)
-                VALUES (0, ?, ?, ?, 1, ?)';
+            $sql = "INSERT INTO tasks (status, name, user_file, done_date, user_id, categories_id)
+                VALUES (0, ?, ?, ?, '$userId', ?)";
             $stmt = db_get_prepare_stmt($link, $sql, [$newTask['name'], $newTask['fileUrl'], $newTask['doneDate'], $newTask['categoriesId']]);
             $res = mysqli_stmt_execute($stmt);
             if ($res) {
