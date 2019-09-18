@@ -28,3 +28,6 @@ create table users (
                        name           char(255) unique not null,
                        password       char(255) not null
 );
+
+CREATE FULLTEXT INDEX ft
+ON tasks( name )

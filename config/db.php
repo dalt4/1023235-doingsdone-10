@@ -1,7 +1,7 @@
 <?php
 $db = [
-    'host' =>  'localhost',
+    'host' => 'localhost',
     'login' => 'root',
-    'password' =>'',
-    'dataBase' =>'doingsdone'
+    'password' => '',
+    'dataBase' => 'doingsdone'
 ];

@@ -7,15 +7,13 @@ $pageTitle = 'Регистрация';
 if (!$link) {
     $error = mysqli_connect_error();
     print include_template('error.php', ['error' => $error]);
-}
-else {
+} else {
     $sql = "SELECT email FROM users";
     $result = mysqli_query($link, $sql);
 
     if ($result) {
         $emails = mysqli_fetch_all($result, MYSQLI_NUM);
-    }
-    else {
+    } else {
         $error = "Ошибка запроса: " . mysqli_error($link);
         print include_template('error.php', ['error' => $error]);
     }
@@ -40,7 +38,8 @@ else {
 
         if (empty($errors)) {
             $sql = 'INSERT INTO users (email, name, password) VALUES (?, ?, ?)';
-            $stmt = db_get_prepare_stmt($link, $sql, [$_POST['email'], $_POST['name'], password_hash($_POST['password'], PASSWORD_DEFAULT)]);
+            $stmt = db_get_prepare_stmt($link, $sql,
+                [$_POST['email'], $_POST['name'], password_hash($_POST['password'], PASSWORD_DEFAULT)]);
             $res = mysqli_stmt_execute($stmt);
             if ($res) {
                 header("Location: index.php");
