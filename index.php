@@ -6,8 +6,6 @@ $pageTitle = 'Дела в порядке';
 
 if (isset($_SESSION['user'])) {
 
-    $userId = $_SESSION['user']['id'];
-
     if (!$link) {
         $error = mysqli_connect_error();
         $pageContent = include_template('error.php', ['error' => $error]);
@@ -28,7 +26,7 @@ if (isset($_SESSION['user'])) {
         if (isset($_GET['id'])) {
             $taskId = intval($_GET['id']);
 
-            $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
+            $sql = "SELECT t.id, t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
             JOIN categories c ON c.id = t.categories_id
             WHERE t.user_id = '$userId' AND c.id = '$taskId'";
 
@@ -36,13 +34,13 @@ if (isset($_SESSION['user'])) {
 
             $search = mysqli_real_escape_string($link, trim($_GET['ft_search']));
 
-            $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
+            $sql = "SELECT t.id, t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
             JOIN categories c ON c.id = t.categories_id
             WHERE t.user_id = '$userId' AND MATCH(t.name) AGAINST('$search') ";
 
         } // GET запросов нет выводим все задачи пользователя
         else {
-            $sql = "SELECT  t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
+            $sql = "SELECT t.id, t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile FROM tasks t
             JOIN categories c ON c.id = t.categories_id
             WHERE t.user_id = '$userId'";
         }
