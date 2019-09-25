@@ -20,7 +20,7 @@ $_SESSION['show_completed'] = $show_complete_tasks;
 
 $categories = get_categories($userId, $link);
 
-$sql_tasks = "SELECT t.id, t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile 
+$sql_tasks = "SELECT t.id, t.name, done_date AS doneDate, status AS done, c.name AS category, user_file AS userFile,  t.categories_id
     FROM tasks t JOIN categories c ON c.id = t.categories_id WHERE t.user_id = '$userId'";
 
 //проверка на наличие GET запросов
@@ -29,7 +29,8 @@ if (isset($_GET['check']) && isset($_GET["task_id"])) {
     $check = intval($_GET["check"]);
     $sql_status = "UPDATE tasks SET status = '$check' WHERE id = '$id'";
     $result = mysqli_query($link, $sql_status);
-    header("Location: /index.php");
+    $cat = $_GET['id'] ?? '';
+    header("Location: /index.php?id=$cat");
 }
 
 if (isset($_GET['choice'])) {
@@ -64,8 +65,6 @@ if (!$res) {
 }
 
 $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
-
-
 
 if (empty($categories)) {
     $new_message = 'Для начала работы добавьте проект';
