@@ -1,0 +1,13 @@
+{
+    "name": "dalt4/1023235-doingsdone-10",
+    "description": "is a web application for conveniently maintaining a to-do list. The service helps users not to forget about upcoming important events and tasks.",
+    "authors": [
+        {
+            "name": "dalt4",
+            "email": "45166154+dalt4@users.noreply.github.com"
+        }
+    ],
+    "require": {
+        "swiftmailer/swiftmailer": "^6.0"
+    }
+}
