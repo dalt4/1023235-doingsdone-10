@@ -1,33 +1,32 @@
-create database doingsdone
-    default character set utf8
-    default collate utf8_general_ci;
+CREATE DATABASE IF NOT EXISTS doingsdone
+    DEFAULT CHARACTER SET utf8
+    DEFAULT COLLATE utf8_general_ci;
 
-use doingsdone;
+USE doingsdone;
 
-create table categories (
-                            id       int(11) auto_increment primary key,
-                            name     char(255) unique not null,
-                            user_id  int(11) not null
+CREATE TABLE IF NOT EXISTS categories (
+	id       INT(11) AUTO_INCREMENT PRIMARY KEY,
+	name     CHAR(255) NOT NULL,
+	user_id  INT(11) NOT NULL
 );
 
-create table tasks (
-                       id             int(11) auto_increment primary key,
-                       add_date       timestamp not null default current_timestamp,
-                       status         tinyint not null default 0,
-                       name           char(255) unique not null,
-                       user_file      char(255) default null,
-                       done_date      date default null,
-                       user_id        int(11) not null,
-                       categories_id  int(11) not null
+CREATE TABLE IF NOT EXISTS tasks (
+   id             INT(11) AUTO_INCREMENT PRIMARY KEY,
+   add_date       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   status         TINYINT NOT NULL DEFAULT 0,
+   name           CHAR(255) UNIQUE NOT NULL,
+   user_file      CHAR(255) DEFAULT NULL,
+   done_date      DATE DEFAULT NULL,
+   user_id        INT(11) NOT NULL,
+   categories_id  INT(11) NOT NULL
 );
 
-create table users (
-                       id             int(11) auto_increment primary key,
-                       add_date       timestamp not null default current_timestamp,
-                       email          char(255) not null unique,
-                       name           char(255) unique not null,
-                       password       char(255) not null
+CREATE TABLE IF NOT EXISTS users (
+   id             INT(11) AUTO_INCREMENT PRIMARY KEY,
+   add_date       TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
+   email          CHAR(255) NOT NULL UNIQUE,
+   name           CHAR(255) UNIQUE NOT NULL,
+   password       CHAR(255) NOT NULL
 );
 
-CREATE FULLTEXT INDEX ft
-ON tasks( name )
+CREATE FULLTEXT INDEX ft ON tasks( name );

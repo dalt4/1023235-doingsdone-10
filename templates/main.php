@@ -1,24 +1,3 @@
-<section class="content__side">
-    <h2 class="content__side-heading">Проекты</h2>
-
-    <nav class="main-navigation">
-        <ul class="main-navigation__list">
-            <?php foreach ($categories as $value): ?>
-                <li class="main-navigation__list-item <?= ($_GET['id'] === $value['id']) ? 'main-navigation__list-item--active' : ''; ?>">
-                    <a class="main-navigation__list-item-link"
-                       href="/index.php?id=<?= $value['id'] ?>"><?= strip_tags($value['name']) ?></a>
-                    <span class="main-navigation__list-item-count">
-                       <?= $value['tasksCount']; ?>
-                    </span>
-                </li>
-            <?php endforeach; ?>
-        </ul>
-    </nav>
-
-    <a class="button button--transparent button--plus content__side-button"
-       href="/add-cat.php" target="project_add">Добавить проект</a>
-</section>
-
 <main class="content__main">
     <h2 class="content__main-heading">Список задач</h2>
 
@@ -30,10 +9,16 @@
 
     <div class="tasks-controls">
         <nav class="tasks-switch">
-            <a href="/" class="tasks-switch__item tasks-switch__item--active">Все задачи</a>
-            <a href="/" class="tasks-switch__item">Повестка дня</a>
-            <a href="/" class="tasks-switch__item">Завтра</a>
-            <a href="/" class="tasks-switch__item">Просроченные</a>
+            <a href="/index.php"
+               class="tasks-switch__item <?= !isset($_GET['choice']) ? 'tasks-switch__item--active' : '' ?>">Все
+                задачи</a>
+            <a href="/index.php?choice=today"
+               class="tasks-switch__item <?= isset($_GET['choice']) && $_GET['choice'] === 'today' ? 'tasks-switch__item--active' : '' ?>">Повестка
+                дня</a>
+            <a href="/index.php?choice=tomorrow"
+               class="tasks-switch__item <?= isset($_GET['choice']) && $_GET['choice'] === 'tomorrow' ? 'tasks-switch__item--active' : '' ?>">Завтра</a>
+            <a href="/index.php?choice=yesterday"
+               class="tasks-switch__item <?= isset($_GET['choice']) && $_GET['choice'] === 'yesterday' ? 'tasks-switch__item--active' : '' ?>">Просроченные</a>
         </nav>
 
         <label class="checkbox">
@@ -51,13 +36,14 @@
                 continue;
             } ?>
             <tr class="tasks__item task
-                <?= $value['done'] ? 'task--completed ' : ' ' ?>
+                <?= $value['done'] ? 'task--completed ' : '' ?>
                 <?= (strtotime($value['doneDate']) - time()) / 3600 <= 24 && $value['doneDate'] && !$value['done'] ? 'task--important' : '' ?>
             ">
                 <td class="task__select">
                     <label class="checkbox task__checkbox">
-                        <input class="checkbox__input visually-hidden" type="checkbox" value="<?= $value['id'] ?>"
-                         <?= $value['done'] ? 'checked' : '' ?>>
+                        <input class="checkbox__input visually-hidden task__checkbox" type="checkbox"
+                               value="<?= $value['id'] ?>" data-cat="<?= $value['categories_id'] ?>"
+                            <?= $value['done'] ? 'checked' : '' ?>>
 
                         <span class="checkbox__text"><?= strip_tags($value['name']) ?></span>
                     </label>

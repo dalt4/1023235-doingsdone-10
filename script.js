@@ -9,7 +9,7 @@ if ($checkbox.length) {
     var searchParams = new URLSearchParams(window.location.search);
     searchParams.set('show_completed', is_checked);
 
-    window.location = 'index.php?' + searchParams.toString();
+    window.location = '/index.php?' + searchParams.toString();
   });
 }
 
@@ -22,8 +22,9 @@ if ($taskCheckboxes.length) {
       var el = event.target;
       var is_checked = +el.checked;
       var task_id = el.getAttribute('value');
+      var cat_id = el.getAttribute('data-cat');
 
-      var url = '/index.php?task_id=' + task_id + '&check=' + is_checked;
+      var url = '/index.php?task_id=' + task_id + '&check=' + is_checked + '&id=' + cat_id;
       window.location = url;
     }
   });

@@ -4,19 +4,19 @@
 <head>
     <meta charset="UTF-8">
     <title><?= $pageTitle ?></title>
-    <link rel="stylesheet" href="css/normalize.css">
-    <link rel="stylesheet" href="css/style.css">
-    <link rel="stylesheet" href="css/flatpickr.min.css">
+    <link rel="stylesheet" href="/css/normalize.css">
+    <link rel="stylesheet" href="/css/style.css">
+    <link rel="stylesheet" href="/css/flatpickr.min.css">
 </head>
 
-<body class="<?= $userName ? '' : 'body-background' ?>">
+<body class="<?= $guest ? 'body-background' : '' ?>">
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container <?= $userName ? 'container--with-sidebar' : '' ?>">
+    <div class="container <?= !$guest ? 'container--with-sidebar' : '' ?>">
         <header class="main-header">
             <a href="/">
-                <img src="img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
+                <img src="/img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
             </a>
 
             <div class="main-header__side">
@@ -36,6 +36,33 @@
         </header>
 
         <div class="content">
+            <section class="content__side <?= $userName ? '' : 'hidden' ?>">
+                <h2 class="content__side-heading">Проекты</h2>
+
+                <nav class="main-navigation">
+                    <ul class="main-navigation__list">
+                        <?php foreach ($categories as $value): ?>
+                            <li class="main-navigation__list-item <?= ($_GET['id'] === $value['id']) ? 'main-navigation__list-item--active' : ''; ?>">
+                                <a class="main-navigation__list-item-link"
+                                   href="/index.php?id=<?= $value['id'] ?>"><?= strip_tags($value['name']) ?></a>
+                                <span class="main-navigation__list-item-count">
+                       <?= $value['tasksCount']; ?>
+                    </span>
+                            </li>
+                        <?php endforeach; ?>
+                    </ul>
+                </nav>
+
+                <a class="button button--transparent button--plus content__side-button" href="/add-cat.php">Добавить
+                    проект</a>
+            </section>
+
+            <section class="content__side <?= $register || $auth ? '' : 'hidden' ?>">
+                <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
+
+                <a class="button button--transparent content__side-button" href="/auth.php">Войти</a>
+            </section>
+
             <?= $pageContent ?>
         </div>
     </div>
