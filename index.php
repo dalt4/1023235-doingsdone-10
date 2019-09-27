@@ -68,7 +68,7 @@ $tasks = mysqli_fetch_all($res, MYSQLI_ASSOC);
 
 if (empty($categories)) {
     $new_message = 'Для начала работы добавьте проект';
-}else {
+} else {
     if (isset($_GET['ft_search']) && empty($tasks)) {
         http_response_code(404);
         $message = 'По вашему запросу ничего не найдено';

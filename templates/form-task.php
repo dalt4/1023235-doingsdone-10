@@ -16,7 +16,7 @@
                 <option value=''>Выберите проект</option>
                 <?php foreach ($categories as $value): ?>
                     <option value='<?= $value['id'] ?>'
-                        <?= isset ($_POST['category']) && $value['id'] === $_POST['category'] ? 'selected': '' ?>>
+                        <?= isset ($_POST['category']) && $value['id'] === $_POST['category'] ? 'selected' : '' ?>>
                         <?= strip_tags($value['name']) ?></option>
                 <?php endforeach; ?>
             </select>

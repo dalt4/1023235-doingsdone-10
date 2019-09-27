@@ -60,7 +60,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$res) {
             echo mysqli_error($link);
             exit();
-        }else {
+        } else {
             header("Location: index.php");
         }
     }

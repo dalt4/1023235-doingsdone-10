@@ -15,7 +15,7 @@ if (!$link) {
     print include_template('layout.php', [
         'pageContent' => $pageContent,
         'pageTitle' => 'Ошибка'
-        ]);
+    ]);
     exit();
 }
 

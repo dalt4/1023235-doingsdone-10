@@ -46,7 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
 
-    if (empty($errors)){
+    if (empty($errors)) {
         $_SESSION['user'] = $user;
         header("Location: index.php");
     } else {

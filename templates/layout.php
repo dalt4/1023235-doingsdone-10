@@ -53,7 +53,8 @@
                     </ul>
                 </nav>
 
-                <a class="button button--transparent button--plus content__side-button" href="/add-cat.php">Добавить проект</a>
+                <a class="button button--transparent button--plus content__side-button" href="/add-cat.php">Добавить
+                    проект</a>
             </section>
 
             <section class="content__side <?= $register || $auth ? '' : 'hidden' ?>">
