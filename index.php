@@ -3,8 +3,6 @@
 require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке';
-var_dump($link);
-var_dump($userId);
 
 if (!isset($_SESSION['user'])) {
     $pageContent = include_template('guest.php', []);
