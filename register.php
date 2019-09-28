@@ -4,7 +4,7 @@ require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке - регистрация';
 
-if (!isset($_SESSION['user'])) {
+if (isset($_SESSION['user'])) {
     header('Location: /index.php');
 }
 
