@@ -1,6 +1,11 @@
 <?php
 
-// вывод массива категорий с подсчетом задач
+/**
+ * Получает id пользователя и ресурс соединения, возвращает массив с проектами пользователя
+ * @param string $userId строка с id пользователя
+ * @param object(mysqli) $link ресурс соединения
+ * @return array ассоциативный массив с проектами выбранного пользователя
+ */
 function get_categories($userId, $link)
 {
     $sql = "SELECT c.id, c.name, COUNT(t.id) AS tasksCount FROM categories c
