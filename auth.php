@@ -3,6 +3,10 @@ require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке - вход на сайт';
 
+if (isset($_SESSION['user'])) {
+    header('Location: /index.php');
+}
+
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $sql = "SELECT email FROM users";
@@ -62,5 +66,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 print include_template('layout.php', [
     'pageContent' => $pageContent,
     'pageTitle' => $pageTitle,
+    'userName' => $userName,
     'auth' => 1
 ]);

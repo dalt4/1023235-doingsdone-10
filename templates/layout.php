@@ -9,11 +9,11 @@
     <link rel="stylesheet" href="/css/flatpickr.min.css">
 </head>
 
-<body class="<?= $guest ? 'body-background' : '' ?>">
+<body class="<?= isset($guest) ? 'body-background' : '' ?>">
 <h1 class="visually-hidden">Дела в порядке</h1>
 
 <div class="page-wrapper">
-    <div class="container <?= !$guest ? 'container--with-sidebar' : '' ?>">
+    <div class="container <?= !isset($guest) ? 'container--with-sidebar' : '' ?>">
         <header class="main-header">
             <a href="/">
                 <img src="/img/logo.png" width="153" height="42" alt="Логотип Дела в порядке">
@@ -57,7 +57,7 @@
                     проект</a>
             </section>
 
-            <section class="content__side <?= $register || $auth ? '' : 'hidden' ?>">
+            <section class="content__side <?= isset($register) || isset($auth) ? '' : 'hidden' ?>">
                 <p class="content__side-info">Если у вас уже есть аккаунт, авторизуйтесь на сайте</p>
 
                 <a class="button button--transparent content__side-button" href="/auth.php">Войти</a>

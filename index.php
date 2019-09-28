@@ -10,6 +10,7 @@ if (!isset($_SESSION['user'])) {
     print include_template('layout.php', [
         'pageContent' => $pageContent,
         'pageTitle' => $pageTitle,
+        'userName' => $userName,
         'guest' => 1
     ]);
 }

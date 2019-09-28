@@ -4,6 +4,9 @@ require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке - регистрация';
 
+if (!isset($_SESSION['user'])) {
+    header('Location: /index.php');
+}
 
 $sql = "SELECT email FROM users";
 $result = mysqli_query($link, $sql);
@@ -43,9 +46,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         if (!$res) {
             echo mysqli_error($link);
             exit();
+        } else {
+            header("Location: index.php");
         }
 
-        header("Location: index.php");
 
     } else {
         $pageContent = include_template('form-register.php', [
@@ -60,5 +64,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 print include_template('layout.php', [
     'pageContent' => $pageContent,
     'pageTitle' => $pageTitle,
+    'userName' => $userName,
     'register' => 1
 ]);
