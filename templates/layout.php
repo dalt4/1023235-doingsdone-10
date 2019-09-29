@@ -42,7 +42,7 @@
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
                         <?php foreach ($categories as $value): ?>
-                            <li class="main-navigation__list-item <?= ($_GET['id'] === $value['id']) ? 'main-navigation__list-item--active' : ''; ?>">
+                            <li class="main-navigation__list-item <?= isset($_GET['id']) && ($_GET['id'] === $value['id']) ? 'main-navigation__list-item--active' : ''; ?>">
                                 <a class="main-navigation__list-item-link"
                                    href="/index.php?id=<?= $value['id'] ?>"><?= strip_tags($value['name']) ?></a>
                                 <span class="main-navigation__list-item-count">

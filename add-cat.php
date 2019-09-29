@@ -18,6 +18,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } elseif (in_array($_POST['name'], array_column($categories, 'name'))) {
         $errors['name'] = "У вас уже есть такой проект";
     }
+
+    if (strlen($_POST['name']) > 50) {
+        $errors['name'] = "Недопустимая длина";
+    }
+
     //нет ошибок добавляем проект и выходим на главную
     if (empty($errors)) {
 

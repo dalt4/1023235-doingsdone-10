@@ -18,6 +18,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['name'] = "Это поле нужно заполнить";
     }
 
+    if (strlen($_POST['name']) > 50) {
+        $errors['name'] = "Недопустимая длина";
+    }
+
     if (!empty($_POST['date']) && !is_date_valid($_POST['date'])) {
         $errors['date'] = "Неверный формат даты";
 

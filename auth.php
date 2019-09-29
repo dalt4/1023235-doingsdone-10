@@ -19,14 +19,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     $users = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-    if (isset($_POST['password']) && empty($_POST['password'])) {
-        $errors['password'] = "Это поле нужно заполнить";
-    }
-
     if (isset($_POST['email']) && empty($_POST['email'])) {
         $errors['email'] = "Это поле нужно заполнить";
+        $errors['password'] = "Вы ввели неверный email/пароль";
     } elseif (!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL)) {
         $errors['email'] = 'E-mail введён некорректно';
+        $errors['password'] = "Вы ввели неверный email/пароль";
     } elseif (!in_array($_POST['email'], array_column($users, 'email'))) {
         $errors['email'] = 'Вы ввели неверный email/пароль';
         $errors['password'] = "Вы ввели неверный email/пароль";
@@ -44,7 +42,12 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
         $user = mysqli_fetch_array($res, MYSQLI_ASSOC);
     }
-    if (!empty($_POST['password']) && !password_verify($_POST['password'], $user['password'])) {
+
+    if (isset($_POST['password']) && empty($_POST['password'])) {
+        $errors['password'] = "Это поле нужно заполнить";
+    }
+
+    if (isset($user) && !password_verify($_POST['password'], $user['password'])) {
         $errors['password'] = "Вы ввели неверный email/пароль";
         $errors['email'] = 'Вы ввели неверный email/пароль';
     }

@@ -3,6 +3,7 @@
 require_once('config/init.php');
 
 $pageTitle = 'Дела в порядке';
+$tasks = [];
 
 if (!isset($_SESSION['user'])) {
     $pageContent = include_template('guest.php', []);
@@ -53,9 +54,11 @@ if (isset($_GET['id'])) {
     $sql_tasks .= "AND c.id = '$catId'";
 }
 
-if (isset($_GET['ft_search'])) {
+if (isset($_GET['ft_search']) && strlen(trim($_GET['ft_search'])) !== 0) {
     $search = mysqli_real_escape_string($link, trim($_GET['ft_search']));
     $sql_tasks .= "AND MATCH(t.name) AGAINST('$search')";
+} elseif (isset($_GET['ft_search'])) {
+    $message = 'Отправлен пустой запрос';
 }
 
 $res = mysqli_query($link, $sql_tasks);

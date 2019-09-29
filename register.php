@@ -29,12 +29,24 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['email'] = 'E-mail уже зарегистрирован';
     }
 
+    if (strlen($_POST['email']) > 50) {
+        $errors['email'] = "Недопустимая длина";
+    }
+
     if (empty($_POST['password'])) {
         $errors['password'] = "Это поле нужно заполнить";
     }
 
+    if (strlen($_POST['password']) > 50) {
+        $errors['password'] = "Недопустимая длина";
+    }
+
     if (empty($_POST['name'])) {
         $errors['name'] = "Это поле нужно заполнить";
+    }
+
+    if (strlen($_POST['name']) > 50) {
+        $errors['name'] = "Недопустимая длина";
     }
 
     if (empty($errors)) {
