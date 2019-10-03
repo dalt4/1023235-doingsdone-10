@@ -30,7 +30,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $errors['password'] = "Вы ввели неверный email/пароль";
     } else {
 
-        $email = $_POST['email'] ?? null;
+        $email = mysqli_real_escape_string($link, $_POST['email']);
 
         $sql = "SELECT * FROM users WHERE email = '$email'";
         $res = mysqli_query($link, $sql);
