@@ -41,7 +41,11 @@
 
                 <nav class="main-navigation">
                     <ul class="main-navigation__list">
-                        <?php foreach ($categories as $value): ?>
+
+                        <?php
+                        if (isset($categories)):
+                        foreach ($categories as $value):
+                            ?>
                             <li class="main-navigation__list-item <?= isset($_GET['id']) && ($_GET['id'] === $value['id']) ? 'main-navigation__list-item--active' : ''; ?>">
                                 <a class="main-navigation__list-item-link"
                                    href="/index.php?id=<?= $value['id'] ?>"><?= strip_tags($value['name']) ?></a>
@@ -49,7 +53,7 @@
                        <?= $value['tasksCount']; ?>
                     </span>
                             </li>
-                        <?php endforeach; ?>
+                        <?php endforeach; endif; ?>
                     </ul>
                 </nav>
 
