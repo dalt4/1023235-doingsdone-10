@@ -14,6 +14,7 @@ if (!isset($_SESSION['user'])) {
         'userName' => $userName,
         'guest' => 1
     ]);
+    exit();
 }
 
 // переменная для показа/скрытия выполненных задач
